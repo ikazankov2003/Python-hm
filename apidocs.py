@@ -4,13 +4,24 @@ from Myerror import *
 
 oportunities = Oportunities()
 
-
+"""
+searcing - поиск записок по заданным данным
+Параметры
+ непринимат на вход параметры
+Результатом работы является - найденная записка(в случае нахождения схожести), 
+"""
 def searching():
     filter = input("Search for: ")
     notes = oportunities.search(filter)
     oportunities.show(notes)
 
 
+"""
+modification - изменяет уже существующую заметку
+Параметры
+ непринимат на вход параметры
+Результатом работы является - изменения старой записки, с фиксацией даты изменения
+"""
 def modification():
     id = input("Enter a note id: ")
     if id.isdigit():
@@ -24,13 +35,28 @@ def modification():
     else:
         print('Please enter a number')
 
-
+"""
+addition - создает новую заметку
+Параметры
+ непринимат на вход параметры
+Результатом работы является - создание новой, с фиксацией даты создания
+"""
 def addition():
     memo, tag = input("Enter a memo: "), input("Enter tag: ")
     oportunities.create(memo, tag, datetime.now())
     print("Your note has been added.")
 
+"""
+choise - выполняет функцию, в соответсвии с выбором пользователя
+Параметры
+ непринимат на вход параметры
+Результатом работы является - выполнение вызванной функции
 
+Исключения
+-ValueTooSmallError - введено число меньше существующих
+-ValueTooLargeError - введено число больше существующих
+-WrongdataTypeError - введен другой тип данных
+"""
 def choice():
     while True:
         try:
@@ -53,7 +79,12 @@ def choice():
             print('There is no team with this number, enter a lower number')
         except WrongdataTypeError:
             print('Please enter a number')
-
+"""
+sort - посик заметок в определенном интервале времени
+Параметры
+ непринимат на вход параметры
+Результатом работы является - вывод всех заметок, созданных в заданный период
+"""
 def sort():
     year1, month1, day1 = int(input("Enter a year1:")), int(input("Enter a month1:")), int(input("Enter a day1:"))
     year2, month2, day2 = int(input("Enter a year2:")), int(input("Enter a month2:")), int(input("Enter a day2:"))
@@ -62,7 +93,9 @@ def sort():
     notes = oportunities.sort(border1, border2)
     print(SEPARATOR)
     oportunities.show(notes)
-
+"""
+interface - меню выбора функции
+"""
 interface = [(1, "Show all notes", oportunities.show),
              (2, 'Search notes', searching),
              (3, 'Add note', addition),
@@ -70,7 +103,13 @@ interface = [(1, "Show all notes", oportunities.show),
              (5, 'Sort', sort),
              (6, 'Quit', oportunities.quit_prog)]
 
-
+"""
+menu - вывод меню выбора функции
+Параметры
+ непринимат на вход параметры
+Результатом работы является - выводит меню, в которым пользователь может выбрать
+необходимую функцию
+"""
 def menu():
     print(SEPARATOR, '\n')
     for i in range(0, 6):
